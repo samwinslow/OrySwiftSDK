@@ -49,11 +49,11 @@ public struct APIHelper {
 
     public static func convertAnyToString(_ value: Any?) -> String? {
         guard let value = value else { return nil }
-        if let value = value as? any RawRepresentable {
-            return "\(value.rawValue)"
-        } else {
-            return "\(value)"
-        }
+//        if let value = value as? any RawRepresentable {
+//            return "\(value.rawValue)"
+//        } else {
+        return "\(value)"
+//        }
     }
 
     public static func mapValueToPathItem(_ source: Any) -> Any {

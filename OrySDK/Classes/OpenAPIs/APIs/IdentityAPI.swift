@@ -523,6 +523,8 @@ open class IdentityAPI {
      * enum for parameter expand
      */
     public enum Expand_getSession: String, CaseIterable {
+        // STUB
+        case none = ""
     }
 
     /**
@@ -751,6 +753,8 @@ open class IdentityAPI {
      * enum for parameter expand
      */
     public enum Expand_listSessions: String, CaseIterable {
+        // STUB
+        case none = ""
     }
 
     /**
