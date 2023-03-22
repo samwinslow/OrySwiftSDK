@@ -16,19 +16,11 @@ open class OidcAPI {
      Register OAuth2 Client using OpenID Dynamic Client Registration
      
      - parameter oAuth2Client: (body) Dynamic Client Registration Request Body 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func createOidcDynamicClient(oAuth2Client: OAuth2Client, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return createOidcDynamicClientWithRequestBuilder(oAuth2Client: oAuth2Client).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createOidcDynamicClient(oAuth2Client: OAuth2Client) async throws -> OAuth2Client {
+        return try await createOidcDynamicClientWithRequestBuilder(oAuth2Client: oAuth2Client).execute().body
     }
 
     /**
@@ -60,19 +52,11 @@ open class OidcAPI {
      Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol
      
      - parameter id: (path) The id of the OAuth 2.0 Client. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteOidcDynamicClient(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteOidcDynamicClientWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteOidcDynamicClient(id: String) async throws {
+        return try await deleteOidcDynamicClientWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -109,19 +93,11 @@ open class OidcAPI {
     /**
      OpenID Connect Discovery
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OidcConfiguration
      */
-    @discardableResult
-    open class func discoverOidcConfiguration(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OidcConfiguration?, _ error: Error?) -> Void)) -> RequestTask {
-        return discoverOidcConfigurationWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func discoverOidcConfiguration() async throws -> OidcConfiguration {
+        return try await discoverOidcConfigurationWithRequestBuilder().execute().body
     }
 
     /**
@@ -152,19 +128,11 @@ open class OidcAPI {
      Get OAuth2 Client using OpenID Dynamic Client Registration
      
      - parameter id: (path) The id of the OAuth 2.0 Client. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func getOidcDynamicClient(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return getOidcDynamicClientWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getOidcDynamicClient(id: String) async throws -> OAuth2Client {
+        return try await getOidcDynamicClientWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -201,19 +169,11 @@ open class OidcAPI {
     /**
      OpenID Connect Userinfo
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OidcUserInfo
      */
-    @discardableResult
-    open class func getOidcUserInfo(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OidcUserInfo?, _ error: Error?) -> Void)) -> RequestTask {
-        return getOidcUserInfoWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getOidcUserInfo() async throws -> OidcUserInfo {
+        return try await getOidcUserInfoWithRequestBuilder().execute().body
     }
 
     /**
@@ -246,19 +206,11 @@ open class OidcAPI {
     /**
      OpenID Connect Front- and Back-channel Enabled Logout
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func revokeOidcSession(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return revokeOidcSessionWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func revokeOidcSession() async throws {
+        return try await revokeOidcSessionWithRequestBuilder().execute().body
     }
 
     /**
@@ -290,19 +242,11 @@ open class OidcAPI {
      
      - parameter id: (path) OAuth 2.0 Client ID 
      - parameter oAuth2Client: (body) OAuth 2.0 Client Request Body 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func setOidcDynamicClient(id: String, oAuth2Client: OAuth2Client, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return setOidcDynamicClientWithRequestBuilder(id: id, oAuth2Client: oAuth2Client).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setOidcDynamicClient(id: String, oAuth2Client: OAuth2Client) async throws -> OAuth2Client {
+        return try await setOidcDynamicClientWithRequestBuilder(id: id, oAuth2Client: oAuth2Client).execute().body
     }
 
     /**

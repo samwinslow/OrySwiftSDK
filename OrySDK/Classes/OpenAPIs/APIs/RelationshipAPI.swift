@@ -16,19 +16,11 @@ open class RelationshipAPI {
      Check the syntax of an OPL file
      
      - parameter body: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: CheckOplSyntaxResult
      */
-    @discardableResult
-    open class func checkOplSyntax(body: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: CheckOplSyntaxResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return checkOplSyntaxWithRequestBuilder(body: body).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func checkOplSyntax(body: String? = nil) async throws -> CheckOplSyntaxResult {
+        return try await checkOplSyntaxWithRequestBuilder(body: body).execute().body
     }
 
     /**
@@ -63,19 +55,11 @@ open class RelationshipAPI {
      Create a Relationship
      
      - parameter createRelationshipBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Relationship
      */
-    @discardableResult
-    open class func createRelationship(createRelationshipBody: CreateRelationshipBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Relationship?, _ error: Error?) -> Void)) -> RequestTask {
-        return createRelationshipWithRequestBuilder(createRelationshipBody: createRelationshipBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createRelationship(createRelationshipBody: CreateRelationshipBody? = nil) async throws -> Relationship {
+        return try await createRelationshipWithRequestBuilder(createRelationshipBody: createRelationshipBody).execute().body
     }
 
     /**
@@ -116,19 +100,11 @@ open class RelationshipAPI {
      - parameter subjectSetNamespace: (query) Namespace of the Subject Set (optional)
      - parameter subjectSetObject: (query) Object of the Subject Set (optional)
      - parameter subjectSetRelation: (query) Relation of the Subject Set (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteRelationships(namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteRelationshipsWithRequestBuilder(namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteRelationships(namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil) async throws {
+        return try await deleteRelationshipsWithRequestBuilder(namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation).execute().body
     }
 
     /**
@@ -186,19 +162,11 @@ open class RelationshipAPI {
      - parameter subjectSetNamespace: (query) Namespace of the Subject Set (optional)
      - parameter subjectSetObject: (query) Object of the Subject Set (optional)
      - parameter subjectSetRelation: (query) Relation of the Subject Set (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Relationships
      */
-    @discardableResult
-    open class func getRelationships(pageToken: String? = nil, pageSize: Int64? = nil, namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Relationships?, _ error: Error?) -> Void)) -> RequestTask {
-        return getRelationshipsWithRequestBuilder(pageToken: pageToken, pageSize: pageSize, namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getRelationships(pageToken: String? = nil, pageSize: Int64? = nil, namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil) async throws -> Relationships {
+        return try await getRelationshipsWithRequestBuilder(pageToken: pageToken, pageSize: pageSize, namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation).execute().body
     }
 
     /**
@@ -251,19 +219,11 @@ open class RelationshipAPI {
     /**
      Query namespaces
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RelationshipNamespaces
      */
-    @discardableResult
-    open class func listRelationshipNamespaces(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RelationshipNamespaces?, _ error: Error?) -> Void)) -> RequestTask {
-        return listRelationshipNamespacesWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listRelationshipNamespaces() async throws -> RelationshipNamespaces {
+        return try await listRelationshipNamespacesWithRequestBuilder().execute().body
     }
 
     /**
@@ -297,19 +257,11 @@ open class RelationshipAPI {
      Patch Multiple Relationships
      
      - parameter relationshipPatch: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func patchRelationships(relationshipPatch: [RelationshipPatch]? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return patchRelationshipsWithRequestBuilder(relationshipPatch: relationshipPatch).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func patchRelationships(relationshipPatch: [RelationshipPatch]? = nil) async throws {
+        return try await patchRelationshipsWithRequestBuilder(relationshipPatch: relationshipPatch).execute().body
     }
 
     /**

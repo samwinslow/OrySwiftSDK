@@ -15,19 +15,11 @@ open class WellknownAPI {
     /**
      Discover Well-Known JSON Web Keys
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: JsonWebKeySet
      */
-    @discardableResult
-    open class func discoverJsonWebKeys(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: JsonWebKeySet?, _ error: Error?) -> Void)) -> RequestTask {
-        return discoverJsonWebKeysWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func discoverJsonWebKeys() async throws -> JsonWebKeySet {
+        return try await discoverJsonWebKeysWithRequestBuilder().execute().body
     }
 
     /**

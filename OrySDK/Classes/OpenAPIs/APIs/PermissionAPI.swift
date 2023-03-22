@@ -23,19 +23,11 @@ open class PermissionAPI {
      - parameter subjectSetObject: (query) Object of the Subject Set (optional)
      - parameter subjectSetRelation: (query) Relation of the Subject Set (optional)
      - parameter maxDepth: (query)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: CheckPermissionResult
      */
-    @discardableResult
-    open class func checkPermission(namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil, maxDepth: Int64? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: CheckPermissionResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return checkPermissionWithRequestBuilder(namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation, maxDepth: maxDepth).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func checkPermission(namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil, maxDepth: Int64? = nil) async throws -> CheckPermissionResult {
+        return try await checkPermissionWithRequestBuilder(namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation, maxDepth: maxDepth).execute().body
     }
 
     /**
@@ -94,19 +86,11 @@ open class PermissionAPI {
      - parameter subjectSetObject: (query) Object of the Subject Set (optional)
      - parameter subjectSetRelation: (query) Relation of the Subject Set (optional)
      - parameter maxDepth: (query)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: CheckPermissionResult
      */
-    @discardableResult
-    open class func checkPermissionOrError(namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil, maxDepth: Int64? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: CheckPermissionResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return checkPermissionOrErrorWithRequestBuilder(namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation, maxDepth: maxDepth).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func checkPermissionOrError(namespace: String? = nil, object: String? = nil, relation: String? = nil, subjectId: String? = nil, subjectSetNamespace: String? = nil, subjectSetObject: String? = nil, subjectSetRelation: String? = nil, maxDepth: Int64? = nil) async throws -> CheckPermissionResult {
+        return try await checkPermissionOrErrorWithRequestBuilder(namespace: namespace, object: object, relation: relation, subjectId: subjectId, subjectSetNamespace: subjectSetNamespace, subjectSetObject: subjectSetObject, subjectSetRelation: subjectSetRelation, maxDepth: maxDepth).execute().body
     }
 
     /**
@@ -161,19 +145,11 @@ open class PermissionAPI {
      - parameter object: (query) Object of the Subject Set 
      - parameter relation: (query) Relation of the Subject Set 
      - parameter maxDepth: (query)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: ExpandedPermissionTree
      */
-    @discardableResult
-    open class func expandPermissions(namespace: String, object: String, relation: String, maxDepth: Int64? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: ExpandedPermissionTree?, _ error: Error?) -> Void)) -> RequestTask {
-        return expandPermissionsWithRequestBuilder(namespace: namespace, object: object, relation: relation, maxDepth: maxDepth).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func expandPermissions(namespace: String, object: String, relation: String, maxDepth: Int64? = nil) async throws -> ExpandedPermissionTree {
+        return try await expandPermissionsWithRequestBuilder(namespace: namespace, object: object, relation: relation, maxDepth: maxDepth).execute().body
     }
 
     /**
@@ -218,19 +194,11 @@ open class PermissionAPI {
      
      - parameter maxDepth: (query)  (optional)
      - parameter postCheckPermissionBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: CheckPermissionResult
      */
-    @discardableResult
-    open class func postCheckPermission(maxDepth: Int64? = nil, postCheckPermissionBody: PostCheckPermissionBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: CheckPermissionResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return postCheckPermissionWithRequestBuilder(maxDepth: maxDepth, postCheckPermissionBody: postCheckPermissionBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func postCheckPermission(maxDepth: Int64? = nil, postCheckPermissionBody: PostCheckPermissionBody? = nil) async throws -> CheckPermissionResult {
+        return try await postCheckPermissionWithRequestBuilder(maxDepth: maxDepth, postCheckPermissionBody: postCheckPermissionBody).execute().body
     }
 
     /**
@@ -270,19 +238,11 @@ open class PermissionAPI {
      
      - parameter maxDepth: (query) nolint:deadcode,unused (optional)
      - parameter postCheckPermissionOrErrorBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: CheckPermissionResult
      */
-    @discardableResult
-    open class func postCheckPermissionOrError(maxDepth: Int64? = nil, postCheckPermissionOrErrorBody: PostCheckPermissionOrErrorBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: CheckPermissionResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return postCheckPermissionOrErrorWithRequestBuilder(maxDepth: maxDepth, postCheckPermissionOrErrorBody: postCheckPermissionOrErrorBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func postCheckPermissionOrError(maxDepth: Int64? = nil, postCheckPermissionOrErrorBody: PostCheckPermissionOrErrorBody? = nil) async throws -> CheckPermissionResult {
+        return try await postCheckPermissionOrErrorWithRequestBuilder(maxDepth: maxDepth, postCheckPermissionOrErrorBody: postCheckPermissionOrErrorBody).execute().body
     }
 
     /**

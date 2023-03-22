@@ -16,19 +16,11 @@ open class IdentityAPI {
      Create an Identity
      
      - parameter createIdentityBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Identity
      */
-    @discardableResult
-    open class func createIdentity(createIdentityBody: CreateIdentityBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Identity?, _ error: Error?) -> Void)) -> RequestTask {
-        return createIdentityWithRequestBuilder(createIdentityBody: createIdentityBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createIdentity(createIdentityBody: CreateIdentityBody? = nil) async throws -> Identity {
+        return try await createIdentityWithRequestBuilder(createIdentityBody: createIdentityBody).execute().body
     }
 
     /**
@@ -63,19 +55,11 @@ open class IdentityAPI {
      Create a Recovery Code
      
      - parameter createRecoveryCodeForIdentityBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RecoveryCodeForIdentity
      */
-    @discardableResult
-    open class func createRecoveryCodeForIdentity(createRecoveryCodeForIdentityBody: CreateRecoveryCodeForIdentityBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RecoveryCodeForIdentity?, _ error: Error?) -> Void)) -> RequestTask {
-        return createRecoveryCodeForIdentityWithRequestBuilder(createRecoveryCodeForIdentityBody: createRecoveryCodeForIdentityBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createRecoveryCodeForIdentity(createRecoveryCodeForIdentityBody: CreateRecoveryCodeForIdentityBody? = nil) async throws -> RecoveryCodeForIdentity {
+        return try await createRecoveryCodeForIdentityWithRequestBuilder(createRecoveryCodeForIdentityBody: createRecoveryCodeForIdentityBody).execute().body
     }
 
     /**
@@ -110,19 +94,11 @@ open class IdentityAPI {
      Create a Recovery Link
      
      - parameter createRecoveryLinkForIdentityBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RecoveryLinkForIdentity
      */
-    @discardableResult
-    open class func createRecoveryLinkForIdentity(createRecoveryLinkForIdentityBody: CreateRecoveryLinkForIdentityBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RecoveryLinkForIdentity?, _ error: Error?) -> Void)) -> RequestTask {
-        return createRecoveryLinkForIdentityWithRequestBuilder(createRecoveryLinkForIdentityBody: createRecoveryLinkForIdentityBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createRecoveryLinkForIdentity(createRecoveryLinkForIdentityBody: CreateRecoveryLinkForIdentityBody? = nil) async throws -> RecoveryLinkForIdentity {
+        return try await createRecoveryLinkForIdentityWithRequestBuilder(createRecoveryLinkForIdentityBody: createRecoveryLinkForIdentityBody).execute().body
     }
 
     /**
@@ -157,19 +133,11 @@ open class IdentityAPI {
      Delete an Identity
      
      - parameter id: (path) ID is the identity&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteIdentity(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteIdentityWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteIdentity(id: String) async throws {
+        return try await deleteIdentityWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -217,19 +185,11 @@ open class IdentityAPI {
      
      - parameter id: (path) ID is the identity&#39;s ID. 
      - parameter type: (path) Type is the credential&#39;s Type. One of totp, webauthn, lookup 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Identity
      */
-    @discardableResult
-    open class func deleteIdentityCredentials(id: String, type: ModelType_deleteIdentityCredentials, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Identity?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteIdentityCredentialsWithRequestBuilder(id: id, type: type).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteIdentityCredentials(id: String, type: ModelType_deleteIdentityCredentials) async throws -> Identity {
+        return try await deleteIdentityCredentialsWithRequestBuilder(id: id, type: type).execute().body
     }
 
     /**
@@ -271,19 +231,11 @@ open class IdentityAPI {
      Delete & Invalidate an Identity's Sessions
      
      - parameter id: (path) ID is the identity&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteIdentitySessions(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteIdentitySessionsWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteIdentitySessions(id: String) async throws {
+        return try await deleteIdentitySessionsWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -321,19 +273,11 @@ open class IdentityAPI {
      Deactivate a Session
      
      - parameter id: (path) ID is the session&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func disableSession(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return disableSessionWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func disableSession(id: String) async throws {
+        return try await disableSessionWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -371,19 +315,11 @@ open class IdentityAPI {
      Extend a Session
      
      - parameter id: (path) ID is the session&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Session
      */
-    @discardableResult
-    open class func extendSession(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Session?, _ error: Error?) -> Void)) -> RequestTask {
-        return extendSessionWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func extendSession(id: String) async throws -> Session {
+        return try await extendSessionWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -422,19 +358,11 @@ open class IdentityAPI {
      
      - parameter id: (path) ID must be set to the ID of identity you want to get 
      - parameter includeCredential: (query) Include Credentials in Response  Currently, only &#x60;oidc&#x60; is supported. This will return the initial OAuth 2.0 Access, Refresh and (optionally) OpenID Connect ID Token. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Identity
      */
-    @discardableResult
-    open class func getIdentity(id: String, includeCredential: [String]? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Identity?, _ error: Error?) -> Void)) -> RequestTask {
-        return getIdentityWithRequestBuilder(id: id, includeCredential: includeCredential).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getIdentity(id: String, includeCredential: [String]? = nil) async throws -> Identity {
+        return try await getIdentityWithRequestBuilder(id: id, includeCredential: includeCredential).execute().body
     }
 
     /**
@@ -476,19 +404,11 @@ open class IdentityAPI {
      Get Identity JSON Schema
      
      - parameter id: (path) ID must be set to the ID of schema you want to get 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: AnyCodable
      */
-    @discardableResult
-    open class func getIdentitySchema(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: AnyCodable?, _ error: Error?) -> Void)) -> RequestTask {
-        return getIdentitySchemaWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getIdentitySchema(id: String) async throws -> AnyCodable {
+        return try await getIdentitySchemaWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -532,19 +452,11 @@ open class IdentityAPI {
      
      - parameter id: (path) ID is the session&#39;s ID. 
      - parameter expand: (query) ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session. Example - ?expand&#x3D;Identity&amp;expand&#x3D;Devices If no value is provided, the expandable properties are skipped. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Session
      */
-    @discardableResult
-    open class func getSession(id: String, expand: [Expand_getSession]? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Session?, _ error: Error?) -> Void)) -> RequestTask {
-        return getSessionWithRequestBuilder(id: id, expand: expand).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getSession(id: String, expand: [Expand_getSession]? = nil) async throws -> Session {
+        return try await getSessionWithRequestBuilder(id: id, expand: expand).execute().body
     }
 
     /**
@@ -588,19 +500,11 @@ open class IdentityAPI {
      - parameter perPage: (query) Items per Page  This is the number of items per page. (optional, default to 250)
      - parameter page: (query) Pagination Page  This value is currently an integer, but it is not sequential. The value is not the page number, but a reference. The next page can be any number and some numbers might return an empty list.  For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist. (optional, default to 1)
      - parameter credentialsIdentifier: (query) CredentialsIdentifier is the identifier (username, email) of the credentials to look up. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [Identity]
      */
-    @discardableResult
-    open class func listIdentities(perPage: Int64? = nil, page: Int64? = nil, credentialsIdentifier: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [Identity]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listIdentitiesWithRequestBuilder(perPage: perPage, page: page, credentialsIdentifier: credentialsIdentifier).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listIdentities(perPage: Int64? = nil, page: Int64? = nil, credentialsIdentifier: String? = nil) async throws -> [Identity] {
+        return try await listIdentitiesWithRequestBuilder(perPage: perPage, page: page, credentialsIdentifier: credentialsIdentifier).execute().body
     }
 
     /**
@@ -643,19 +547,11 @@ open class IdentityAPI {
      
      - parameter perPage: (query) Items per Page  This is the number of items per page. (optional, default to 250)
      - parameter page: (query) Pagination Page  This value is currently an integer, but it is not sequential. The value is not the page number, but a reference. The next page can be any number and some numbers might return an empty list.  For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist. (optional, default to 1)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [IdentitySchemaContainer]
      */
-    @discardableResult
-    open class func listIdentitySchemas(perPage: Int64? = nil, page: Int64? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [IdentitySchemaContainer]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listIdentitySchemasWithRequestBuilder(perPage: perPage, page: page).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listIdentitySchemas(perPage: Int64? = nil, page: Int64? = nil) async throws -> [IdentitySchemaContainer] {
+        return try await listIdentitySchemasWithRequestBuilder(perPage: perPage, page: page).execute().body
     }
 
     /**
@@ -695,19 +591,11 @@ open class IdentityAPI {
      - parameter perPage: (query) Items per Page  This is the number of items per page. (optional, default to 250)
      - parameter page: (query) Pagination Page  This value is currently an integer, but it is not sequential. The value is not the page number, but a reference. The next page can be any number and some numbers might return an empty list.  For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist. (optional, default to 1)
      - parameter active: (query) Active is a boolean flag that filters out sessions based on the state. If no value is provided, all sessions are returned. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [Session]
      */
-    @discardableResult
-    open class func listIdentitySessions(id: String, perPage: Int64? = nil, page: Int64? = nil, active: Bool? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [Session]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listIdentitySessionsWithRequestBuilder(id: id, perPage: perPage, page: page, active: active).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listIdentitySessions(id: String, perPage: Int64? = nil, page: Int64? = nil, active: Bool? = nil) async throws -> [Session] {
+        return try await listIdentitySessionsWithRequestBuilder(id: id, perPage: perPage, page: page, active: active).execute().body
     }
 
     /**
@@ -764,19 +652,11 @@ open class IdentityAPI {
      - parameter pageToken: (query) Next Page Token  The next page token. For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). (optional)
      - parameter active: (query) Active is a boolean flag that filters out sessions based on the state. If no value is provided, all sessions are returned. (optional)
      - parameter expand: (query) ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session. If no value is provided, the expandable properties are skipped. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [Session]
      */
-    @discardableResult
-    open class func listSessions(pageSize: Int64? = nil, pageToken: String? = nil, active: Bool? = nil, expand: [Expand_listSessions]? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [Session]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listSessionsWithRequestBuilder(pageSize: pageSize, pageToken: pageToken, active: active, expand: expand).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listSessions(pageSize: Int64? = nil, pageToken: String? = nil, active: Bool? = nil, expand: [Expand_listSessions]? = nil) async throws -> [Session] {
+        return try await listSessionsWithRequestBuilder(pageSize: pageSize, pageToken: pageToken, active: active, expand: expand).execute().body
     }
 
     /**
@@ -821,19 +701,11 @@ open class IdentityAPI {
      
      - parameter id: (path) ID must be set to the ID of identity you want to update 
      - parameter jsonPatch: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Identity
      */
-    @discardableResult
-    open class func patchIdentity(id: String, jsonPatch: [JsonPatch]? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Identity?, _ error: Error?) -> Void)) -> RequestTask {
-        return patchIdentityWithRequestBuilder(id: id, jsonPatch: jsonPatch).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func patchIdentity(id: String, jsonPatch: [JsonPatch]? = nil) async throws -> Identity {
+        return try await patchIdentityWithRequestBuilder(id: id, jsonPatch: jsonPatch).execute().body
     }
 
     /**
@@ -873,19 +745,11 @@ open class IdentityAPI {
      
      - parameter id: (path) ID must be set to the ID of identity you want to update 
      - parameter updateIdentityBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Identity
      */
-    @discardableResult
-    open class func updateIdentity(id: String, updateIdentityBody: UpdateIdentityBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Identity?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateIdentityWithRequestBuilder(id: id, updateIdentityBody: updateIdentityBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateIdentity(id: String, updateIdentityBody: UpdateIdentityBody? = nil) async throws -> Identity {
+        return try await updateIdentityWithRequestBuilder(id: id, updateIdentityBody: updateIdentityBody).execute().body
     }
 
     /**

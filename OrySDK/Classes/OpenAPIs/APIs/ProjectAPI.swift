@@ -16,19 +16,11 @@ open class ProjectAPI {
      Create a Project
      
      - parameter createProjectBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Project
      */
-    @discardableResult
-    open class func createProject(createProjectBody: CreateProjectBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
-        return createProjectWithRequestBuilder(createProjectBody: createProjectBody).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createProject(createProjectBody: CreateProjectBody? = nil) async throws -> Project {
+        return try await createProjectWithRequestBuilder(createProjectBody: createProjectBody).execute().body
     }
 
     /**
@@ -64,19 +56,11 @@ open class ProjectAPI {
      
      - parameter project: (path) The Project ID or Project slug 
      - parameter createProjectApiKeyRequest: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: ProjectApiKey
      */
-    @discardableResult
-    open class func createProjectApiKey(project: String, createProjectApiKeyRequest: CreateProjectApiKeyRequest? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: ProjectApiKey?, _ error: Error?) -> Void)) -> RequestTask {
-        return createProjectApiKeyWithRequestBuilder(project: project, createProjectApiKeyRequest: createProjectApiKeyRequest).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createProjectApiKey(project: String, createProjectApiKeyRequest: CreateProjectApiKeyRequest? = nil) async throws -> ProjectApiKey {
+        return try await createProjectApiKeyWithRequestBuilder(project: project, createProjectApiKeyRequest: createProjectApiKeyRequest).execute().body
     }
 
     /**
@@ -116,19 +100,11 @@ open class ProjectAPI {
      
      - parameter project: (path) The Project ID or Project slug 
      - parameter tokenId: (path) The Token ID 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteProjectApiKey(project: String, tokenId: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteProjectApiKeyWithRequestBuilder(project: project, tokenId: tokenId).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteProjectApiKey(project: String, tokenId: String) async throws {
+        return try await deleteProjectApiKeyWithRequestBuilder(project: project, tokenId: tokenId).execute().body
     }
 
     /**
@@ -169,19 +145,11 @@ open class ProjectAPI {
     /**
      Returns the Ory Network Project selected in the Ory Network Console
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: ActiveProjectInConsole
      */
-    @discardableResult
-    open class func getActiveProjectInConsole(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: ActiveProjectInConsole?, _ error: Error?) -> Void)) -> RequestTask {
-        return getActiveProjectInConsoleWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getActiveProjectInConsole() async throws -> ActiveProjectInConsole {
+        return try await getActiveProjectInConsoleWithRequestBuilder().execute().body
     }
 
     /**
@@ -215,19 +183,11 @@ open class ProjectAPI {
      Get a Project
      
      - parameter projectId: (path) Project ID  The project&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Project
      */
-    @discardableResult
-    open class func getProject(projectId: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Project?, _ error: Error?) -> Void)) -> RequestTask {
-        return getProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getProject(projectId: String) async throws -> Project {
+        return try await getProjectWithRequestBuilder(projectId: projectId).execute().body
     }
 
     /**
@@ -265,19 +225,11 @@ open class ProjectAPI {
      Get all members associated with this project
      
      - parameter projectId: (path) Project ID  The project&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [CloudAccount]
      */
-    @discardableResult
-    open class func getProjectMembers(projectId: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [CloudAccount]?, _ error: Error?) -> Void)) -> RequestTask {
-        return getProjectMembersWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getProjectMembers(projectId: String) async throws -> [CloudAccount] {
+        return try await getProjectMembersWithRequestBuilder(projectId: projectId).execute().body
     }
 
     /**
@@ -315,19 +267,11 @@ open class ProjectAPI {
      List a project's API Tokens
      
      - parameter project: (path) The Project ID or Project slug 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [ProjectApiKey]
      */
-    @discardableResult
-    open class func listProjectApiKeys(project: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [ProjectApiKey]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listProjectApiKeysWithRequestBuilder(project: project).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listProjectApiKeys(project: String) async throws -> [ProjectApiKey] {
+        return try await listProjectApiKeysWithRequestBuilder(project: project).execute().body
     }
 
     /**
@@ -364,19 +308,11 @@ open class ProjectAPI {
     /**
      List All Projects
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [ProjectMetadata]
      */
-    @discardableResult
-    open class func listProjects(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [ProjectMetadata]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listProjectsWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listProjects() async throws -> [ProjectMetadata] {
+        return try await listProjectsWithRequestBuilder().execute().body
     }
 
     /**
@@ -411,19 +347,11 @@ open class ProjectAPI {
      
      - parameter projectId: (path) Project ID  The project&#39;s ID. 
      - parameter jsonPatch: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SuccessfulProjectUpdate
      */
-    @discardableResult
-    open class func patchProject(projectId: String, jsonPatch: [JsonPatch]? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SuccessfulProjectUpdate?, _ error: Error?) -> Void)) -> RequestTask {
-        return patchProjectWithRequestBuilder(projectId: projectId, jsonPatch: jsonPatch).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func patchProject(projectId: String, jsonPatch: [JsonPatch]? = nil) async throws -> SuccessfulProjectUpdate {
+        return try await patchProjectWithRequestBuilder(projectId: projectId, jsonPatch: jsonPatch).execute().body
     }
 
     /**
@@ -462,19 +390,11 @@ open class ProjectAPI {
      Irrecoverably purge a project
      
      - parameter projectId: (path) Project ID  The project&#39;s ID. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func purgeProject(projectId: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return purgeProjectWithRequestBuilder(projectId: projectId).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func purgeProject(projectId: String) async throws {
+        return try await purgeProjectWithRequestBuilder(projectId: projectId).execute().body
     }
 
     /**
@@ -513,19 +433,11 @@ open class ProjectAPI {
      
      - parameter projectId: (path) Project ID  The project&#39;s ID. 
      - parameter memberId: (path) Member ID 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func removeProjectMember(projectId: String, memberId: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return removeProjectMemberWithRequestBuilder(projectId: projectId, memberId: memberId).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func removeProjectMember(projectId: String, memberId: String) async throws {
+        return try await removeProjectMemberWithRequestBuilder(projectId: projectId, memberId: memberId).execute().body
     }
 
     /**
@@ -567,19 +479,11 @@ open class ProjectAPI {
      Sets the Ory Network Project active in the Ory Network Console
      
      - parameter setActiveProjectInConsoleBody: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func setActiveProjectInConsole(setActiveProjectInConsoleBody: SetActiveProjectInConsoleBody? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return setActiveProjectInConsoleWithRequestBuilder(setActiveProjectInConsoleBody: setActiveProjectInConsoleBody).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setActiveProjectInConsole(setActiveProjectInConsoleBody: SetActiveProjectInConsoleBody? = nil) async throws {
+        return try await setActiveProjectInConsoleWithRequestBuilder(setActiveProjectInConsoleBody: setActiveProjectInConsoleBody).execute().body
     }
 
     /**
@@ -615,19 +519,11 @@ open class ProjectAPI {
      
      - parameter projectId: (path) Project ID  The project&#39;s ID. 
      - parameter setProject: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SuccessfulProjectUpdate
      */
-    @discardableResult
-    open class func setProject(projectId: String, setProject: SetProject? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SuccessfulProjectUpdate?, _ error: Error?) -> Void)) -> RequestTask {
-        return setProjectWithRequestBuilder(projectId: projectId, setProject: setProject).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setProject(projectId: String, setProject: SetProject? = nil) async throws -> SuccessfulProjectUpdate {
+        return try await setProjectWithRequestBuilder(projectId: projectId, setProject: setProject).execute().body
     }
 
     /**

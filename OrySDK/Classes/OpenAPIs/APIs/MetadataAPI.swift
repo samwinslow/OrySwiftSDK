@@ -15,19 +15,11 @@ open class MetadataAPI {
     /**
      Return Running Software Version.
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: GetVersion200Response
      */
-    @discardableResult
-    open class func getVersion(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: GetVersion200Response?, _ error: Error?) -> Void)) -> RequestTask {
-        return getVersionWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getVersion() async throws -> GetVersion200Response {
+        return try await getVersionWithRequestBuilder().execute().body
     }
 
     /**
@@ -60,19 +52,11 @@ open class MetadataAPI {
     /**
      Check HTTP Server Status
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: HealthStatus
      */
-    @discardableResult
-    open class func isAlive(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: HealthStatus?, _ error: Error?) -> Void)) -> RequestTask {
-        return isAliveWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func isAlive() async throws -> HealthStatus {
+        return try await isAliveWithRequestBuilder().execute().body
     }
 
     /**
@@ -105,19 +89,11 @@ open class MetadataAPI {
     /**
      Check HTTP Server and Database Status
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: IsReady200Response
      */
-    @discardableResult
-    open class func isReady(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: IsReady200Response?, _ error: Error?) -> Void)) -> RequestTask {
-        return isReadyWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func isReady() async throws -> IsReady200Response {
+        return try await isReadyWithRequestBuilder().execute().body
     }
 
     /**

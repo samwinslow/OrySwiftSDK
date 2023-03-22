@@ -17,19 +17,11 @@ open class JwkAPI {
      
      - parameter _set: (path) The JSON Web Key Set ID 
      - parameter createJsonWebKeySet: (body)  
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: JsonWebKeySet
      */
-    @discardableResult
-    open class func createJsonWebKeySet(_set: String, createJsonWebKeySet: CreateJsonWebKeySet, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: JsonWebKeySet?, _ error: Error?) -> Void)) -> RequestTask {
-        return createJsonWebKeySetWithRequestBuilder(_set: _set, createJsonWebKeySet: createJsonWebKeySet).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createJsonWebKeySet(_set: String, createJsonWebKeySet: CreateJsonWebKeySet) async throws -> JsonWebKeySet {
+        return try await createJsonWebKeySetWithRequestBuilder(_set: _set, createJsonWebKeySet: createJsonWebKeySet).execute().body
     }
 
     /**
@@ -69,19 +61,11 @@ open class JwkAPI {
      
      - parameter _set: (path) The JSON Web Key Set 
      - parameter kid: (path) The JSON Web Key ID (kid) 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteJsonWebKey(_set: String, kid: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteJsonWebKeyWithRequestBuilder(_set: _set, kid: kid).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteJsonWebKey(_set: String, kid: String) async throws {
+        return try await deleteJsonWebKeyWithRequestBuilder(_set: _set, kid: kid).execute().body
     }
 
     /**
@@ -123,19 +107,11 @@ open class JwkAPI {
      Delete JSON Web Key Set
      
      - parameter _set: (path) The JSON Web Key Set 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteJsonWebKeySet(_set: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteJsonWebKeySetWithRequestBuilder(_set: _set).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteJsonWebKeySet(_set: String) async throws {
+        return try await deleteJsonWebKeySetWithRequestBuilder(_set: _set).execute().body
     }
 
     /**
@@ -174,19 +150,11 @@ open class JwkAPI {
      
      - parameter _set: (path) JSON Web Key Set ID 
      - parameter kid: (path) JSON Web Key ID 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: JsonWebKeySet
      */
-    @discardableResult
-    open class func getJsonWebKey(_set: String, kid: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: JsonWebKeySet?, _ error: Error?) -> Void)) -> RequestTask {
-        return getJsonWebKeyWithRequestBuilder(_set: _set, kid: kid).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getJsonWebKey(_set: String, kid: String) async throws -> JsonWebKeySet {
+        return try await getJsonWebKeyWithRequestBuilder(_set: _set, kid: kid).execute().body
     }
 
     /**
@@ -228,19 +196,11 @@ open class JwkAPI {
      Retrieve a JSON Web Key Set
      
      - parameter _set: (path) JSON Web Key Set ID 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: JsonWebKeySet
      */
-    @discardableResult
-    open class func getJsonWebKeySet(_set: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: JsonWebKeySet?, _ error: Error?) -> Void)) -> RequestTask {
-        return getJsonWebKeySetWithRequestBuilder(_set: _set).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getJsonWebKeySet(_set: String) async throws -> JsonWebKeySet {
+        return try await getJsonWebKeySetWithRequestBuilder(_set: _set).execute().body
     }
 
     /**
@@ -280,19 +240,11 @@ open class JwkAPI {
      - parameter _set: (path) The JSON Web Key Set ID 
      - parameter kid: (path) JSON Web Key ID 
      - parameter jsonWebKey: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: JsonWebKey
      */
-    @discardableResult
-    open class func setJsonWebKey(_set: String, kid: String, jsonWebKey: JsonWebKey? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: JsonWebKey?, _ error: Error?) -> Void)) -> RequestTask {
-        return setJsonWebKeyWithRequestBuilder(_set: _set, kid: kid, jsonWebKey: jsonWebKey).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setJsonWebKey(_set: String, kid: String, jsonWebKey: JsonWebKey? = nil) async throws -> JsonWebKey {
+        return try await setJsonWebKeyWithRequestBuilder(_set: _set, kid: kid, jsonWebKey: jsonWebKey).execute().body
     }
 
     /**
@@ -336,19 +288,11 @@ open class JwkAPI {
      
      - parameter _set: (path) The JSON Web Key Set ID 
      - parameter jsonWebKeySet: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: JsonWebKeySet
      */
-    @discardableResult
-    open class func setJsonWebKeySet(_set: String, jsonWebKeySet: JsonWebKeySet? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: JsonWebKeySet?, _ error: Error?) -> Void)) -> RequestTask {
-        return setJsonWebKeySetWithRequestBuilder(_set: _set, jsonWebKeySet: jsonWebKeySet).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setJsonWebKeySet(_set: String, jsonWebKeySet: JsonWebKeySet? = nil) async throws -> JsonWebKeySet {
+        return try await setJsonWebKeySetWithRequestBuilder(_set: _set, jsonWebKeySet: jsonWebKeySet).execute().body
     }
 
     /**

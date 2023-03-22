@@ -20,19 +20,11 @@ open class FrontendAPI {
      - parameter returnTo: (query) The URL to return the browser to after the flow was completed. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
      - parameter loginChallenge: (query) An optional Hydra login challenge. If present, Kratos will cooperate with Ory Hydra to act as an OAuth2 identity provider.  The value for this parameter comes from &#x60;login_challenge&#x60; URL Query parameter sent to your application (e.g. &#x60;/login?login_challenge&#x3D;abcde&#x60;). (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: LoginFlow
      */
-    @discardableResult
-    open class func createBrowserLoginFlow(refresh: Bool? = nil, aal: String? = nil, returnTo: String? = nil, cookie: String? = nil, loginChallenge: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: LoginFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createBrowserLoginFlowWithRequestBuilder(refresh: refresh, aal: aal, returnTo: returnTo, cookie: cookie, loginChallenge: loginChallenge).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createBrowserLoginFlow(refresh: Bool? = nil, aal: String? = nil, returnTo: String? = nil, cookie: String? = nil, loginChallenge: String? = nil) async throws -> LoginFlow {
+        return try await createBrowserLoginFlowWithRequestBuilder(refresh: refresh, aal: aal, returnTo: returnTo, cookie: cookie, loginChallenge: loginChallenge).execute().body
     }
 
     /**
@@ -74,19 +66,11 @@ open class FrontendAPI {
      Create a Logout URL for Browsers
      
      - parameter cookie: (header) HTTP Cookies  If you call this endpoint from a backend, please include the original Cookie header in the request. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: LogoutFlow
      */
-    @discardableResult
-    open class func createBrowserLogoutFlow(cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: LogoutFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createBrowserLogoutFlowWithRequestBuilder(cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createBrowserLogoutFlow(cookie: String? = nil) async throws -> LogoutFlow {
+        return try await createBrowserLogoutFlowWithRequestBuilder(cookie: cookie).execute().body
     }
 
     /**
@@ -118,19 +102,11 @@ open class FrontendAPI {
      Create Recovery Flow for Browsers
      
      - parameter returnTo: (query) The URL to return the browser to after the flow was completed. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RecoveryFlow
      */
-    @discardableResult
-    open class func createBrowserRecoveryFlow(returnTo: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RecoveryFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createBrowserRecoveryFlowWithRequestBuilder(returnTo: returnTo).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createBrowserRecoveryFlow(returnTo: String? = nil) async throws -> RecoveryFlow {
+        return try await createBrowserRecoveryFlowWithRequestBuilder(returnTo: returnTo).execute().body
     }
 
     /**
@@ -167,19 +143,11 @@ open class FrontendAPI {
      - parameter returnTo: (query) The URL to return the browser to after the flow was completed. (optional)
      - parameter loginChallenge: (query) Ory OAuth 2.0 Login Challenge.  If set will cooperate with Ory OAuth2 and OpenID to act as an OAuth2 server / OpenID Provider.  The value for this parameter comes from &#x60;login_challenge&#x60; URL Query parameter sent to your application (e.g. &#x60;/registration?login_challenge&#x3D;abcde&#x60;).  This feature is compatible with Ory Hydra when not running on the Ory Network. (optional)
      - parameter afterVerificationReturnTo: (query) The URL to return the browser to after the verification flow was completed.  After the registration flow is completed, the user will be sent a verification email. Upon completing the verification flow, this URL will be used to override the default &#x60;selfservice.flows.verification.after.default_redirect_to&#x60; value. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RegistrationFlow
      */
-    @discardableResult
-    open class func createBrowserRegistrationFlow(returnTo: String? = nil, loginChallenge: String? = nil, afterVerificationReturnTo: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RegistrationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createBrowserRegistrationFlowWithRequestBuilder(returnTo: returnTo, loginChallenge: loginChallenge, afterVerificationReturnTo: afterVerificationReturnTo).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createBrowserRegistrationFlow(returnTo: String? = nil, loginChallenge: String? = nil, afterVerificationReturnTo: String? = nil) async throws -> RegistrationFlow {
+        return try await createBrowserRegistrationFlowWithRequestBuilder(returnTo: returnTo, loginChallenge: loginChallenge, afterVerificationReturnTo: afterVerificationReturnTo).execute().body
     }
 
     /**
@@ -219,19 +187,11 @@ open class FrontendAPI {
      
      - parameter returnTo: (query) The URL to return the browser to after the flow was completed. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SettingsFlow
      */
-    @discardableResult
-    open class func createBrowserSettingsFlow(returnTo: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SettingsFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createBrowserSettingsFlowWithRequestBuilder(returnTo: returnTo, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createBrowserSettingsFlow(returnTo: String? = nil, cookie: String? = nil) async throws -> SettingsFlow {
+        return try await createBrowserSettingsFlowWithRequestBuilder(returnTo: returnTo, cookie: cookie).execute().body
     }
 
     /**
@@ -267,19 +227,11 @@ open class FrontendAPI {
      Create Verification Flow for Browser Clients
      
      - parameter returnTo: (query) The URL to return the browser to after the flow was completed. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: VerificationFlow
      */
-    @discardableResult
-    open class func createBrowserVerificationFlow(returnTo: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: VerificationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createBrowserVerificationFlowWithRequestBuilder(returnTo: returnTo).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createBrowserVerificationFlow(returnTo: String? = nil) async throws -> VerificationFlow {
+        return try await createBrowserVerificationFlowWithRequestBuilder(returnTo: returnTo).execute().body
     }
 
     /**
@@ -316,19 +268,11 @@ open class FrontendAPI {
      - parameter refresh: (query) Refresh a login session  If set to true, this will refresh an existing login session by asking the user to sign in again. This will reset the authenticated_at time of the session. (optional)
      - parameter aal: (query) Request a Specific AuthenticationMethod Assurance Level  Use this parameter to upgrade an existing session&#39;s authenticator assurance level (AAL). This allows you to ask for multi-factor authentication. When an identity sign in using e.g. username+password, the AAL is 1. If you wish to \&quot;upgrade\&quot; the session&#39;s security by asking the user to perform TOTP / WebAuth/ ... you would set this to \&quot;aal2\&quot;. (optional)
      - parameter xSessionToken: (header) The Session Token of the Identity performing the settings flow. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: LoginFlow
      */
-    @discardableResult
-    open class func createNativeLoginFlow(refresh: Bool? = nil, aal: String? = nil, xSessionToken: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: LoginFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createNativeLoginFlowWithRequestBuilder(refresh: refresh, aal: aal, xSessionToken: xSessionToken).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createNativeLoginFlow(refresh: Bool? = nil, aal: String? = nil, xSessionToken: String? = nil) async throws -> LoginFlow {
+        return try await createNativeLoginFlowWithRequestBuilder(refresh: refresh, aal: aal, xSessionToken: xSessionToken).execute().body
     }
 
     /**
@@ -365,19 +309,11 @@ open class FrontendAPI {
     /**
      Create Recovery Flow for Native Apps
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RecoveryFlow
      */
-    @discardableResult
-    open class func createNativeRecoveryFlow(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RecoveryFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createNativeRecoveryFlowWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createNativeRecoveryFlow() async throws -> RecoveryFlow {
+        return try await createNativeRecoveryFlowWithRequestBuilder().execute().body
     }
 
     /**
@@ -407,19 +343,11 @@ open class FrontendAPI {
     /**
      Create Registration Flow for Native Apps
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RegistrationFlow
      */
-    @discardableResult
-    open class func createNativeRegistrationFlow(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RegistrationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createNativeRegistrationFlowWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createNativeRegistrationFlow() async throws -> RegistrationFlow {
+        return try await createNativeRegistrationFlowWithRequestBuilder().execute().body
     }
 
     /**
@@ -450,19 +378,11 @@ open class FrontendAPI {
      Create Settings Flow for Native Apps
      
      - parameter xSessionToken: (header) The Session Token of the Identity performing the settings flow. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SettingsFlow
      */
-    @discardableResult
-    open class func createNativeSettingsFlow(xSessionToken: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SettingsFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createNativeSettingsFlowWithRequestBuilder(xSessionToken: xSessionToken).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createNativeSettingsFlow(xSessionToken: String? = nil) async throws -> SettingsFlow {
+        return try await createNativeSettingsFlowWithRequestBuilder(xSessionToken: xSessionToken).execute().body
     }
 
     /**
@@ -493,19 +413,11 @@ open class FrontendAPI {
     /**
      Create Verification Flow for Native Apps
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: VerificationFlow
      */
-    @discardableResult
-    open class func createNativeVerificationFlow(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: VerificationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return createNativeVerificationFlowWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createNativeVerificationFlow() async throws -> VerificationFlow {
+        return try await createNativeVerificationFlowWithRequestBuilder().execute().body
     }
 
     /**
@@ -537,19 +449,11 @@ open class FrontendAPI {
      
      - parameter xSessionToken: (header) Set the Session Token when calling from non-browser clients. A session token has a format of &#x60;MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj&#x60;. (optional)
      - parameter cookie: (header) Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that scenario you must include the HTTP Cookie Header which originally was included in the request to your server. An example of a session in the HTTP Cookie Header is: &#x60;ory_kratos_session&#x3D;a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f&#x3D;&#x3D;&#x60;.  It is ok if more than one cookie are included here as all other cookies will be ignored. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: DeleteMySessionsCount
      */
-    @discardableResult
-    open class func disableMyOtherSessions(xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: DeleteMySessionsCount?, _ error: Error?) -> Void)) -> RequestTask {
-        return disableMyOtherSessionsWithRequestBuilder(xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func disableMyOtherSessions(xSessionToken: String? = nil, cookie: String? = nil) async throws -> DeleteMySessionsCount {
+        return try await disableMyOtherSessionsWithRequestBuilder(xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -585,19 +489,11 @@ open class FrontendAPI {
      - parameter id: (path) ID is the session&#39;s ID. 
      - parameter xSessionToken: (header) Set the Session Token when calling from non-browser clients. A session token has a format of &#x60;MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj&#x60;. (optional)
      - parameter cookie: (header) Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that scenario you must include the HTTP Cookie Header which originally was included in the request to your server. An example of a session in the HTTP Cookie Header is: &#x60;ory_kratos_session&#x3D;a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f&#x3D;&#x3D;&#x60;.  It is ok if more than one cookie are included here as all other cookies will be ignored. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func disableMySession(id: String, xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return disableMySessionWithRequestBuilder(id: id, xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func disableMySession(id: String, xSessionToken: String? = nil, cookie: String? = nil) async throws {
+        return try await disableMySessionWithRequestBuilder(id: id, xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -635,19 +531,11 @@ open class FrontendAPI {
      Get User-Flow Errors
      
      - parameter id: (query) Error is the error&#39;s ID 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: FlowError
      */
-    @discardableResult
-    open class func getFlowError(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: FlowError?, _ error: Error?) -> Void)) -> RequestTask {
-        return getFlowErrorWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getFlowError(id: String) async throws -> FlowError {
+        return try await getFlowErrorWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -683,19 +571,11 @@ open class FrontendAPI {
      
      - parameter id: (query) The Login Flow ID  The value for this parameter comes from &#x60;flow&#x60; URL Query parameter sent to your application (e.g. &#x60;/login?flow&#x3D;abcde&#x60;). 
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: LoginFlow
      */
-    @discardableResult
-    open class func getLoginFlow(id: String, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: LoginFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return getLoginFlowWithRequestBuilder(id: id, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getLoginFlow(id: String, cookie: String? = nil) async throws -> LoginFlow {
+        return try await getLoginFlowWithRequestBuilder(id: id, cookie: cookie).execute().body
     }
 
     /**
@@ -732,19 +612,11 @@ open class FrontendAPI {
      
      - parameter id: (query) The Flow ID  The value for this parameter comes from &#x60;request&#x60; URL Query parameter sent to your application (e.g. &#x60;/recovery?flow&#x3D;abcde&#x60;). 
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RecoveryFlow
      */
-    @discardableResult
-    open class func getRecoveryFlow(id: String, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RecoveryFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return getRecoveryFlowWithRequestBuilder(id: id, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getRecoveryFlow(id: String, cookie: String? = nil) async throws -> RecoveryFlow {
+        return try await getRecoveryFlowWithRequestBuilder(id: id, cookie: cookie).execute().body
     }
 
     /**
@@ -781,19 +653,11 @@ open class FrontendAPI {
      
      - parameter id: (query) The Registration Flow ID  The value for this parameter comes from &#x60;flow&#x60; URL Query parameter sent to your application (e.g. &#x60;/registration?flow&#x3D;abcde&#x60;). 
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RegistrationFlow
      */
-    @discardableResult
-    open class func getRegistrationFlow(id: String, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RegistrationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return getRegistrationFlowWithRequestBuilder(id: id, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getRegistrationFlow(id: String, cookie: String? = nil) async throws -> RegistrationFlow {
+        return try await getRegistrationFlowWithRequestBuilder(id: id, cookie: cookie).execute().body
     }
 
     /**
@@ -831,19 +695,11 @@ open class FrontendAPI {
      - parameter id: (query) ID is the Settings Flow ID  The value for this parameter comes from &#x60;flow&#x60; URL Query parameter sent to your application (e.g. &#x60;/settings?flow&#x3D;abcde&#x60;). 
      - parameter xSessionToken: (header) The Session Token  When using the SDK in an app without a browser, please include the session token here. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SettingsFlow
      */
-    @discardableResult
-    open class func getSettingsFlow(id: String, xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SettingsFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return getSettingsFlowWithRequestBuilder(id: id, xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getSettingsFlow(id: String, xSessionToken: String? = nil, cookie: String? = nil) async throws -> SettingsFlow {
+        return try await getSettingsFlowWithRequestBuilder(id: id, xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -882,19 +738,11 @@ open class FrontendAPI {
      
      - parameter id: (query) The Flow ID  The value for this parameter comes from &#x60;request&#x60; URL Query parameter sent to your application (e.g. &#x60;/verification?flow&#x3D;abcde&#x60;). 
      - parameter cookie: (header) HTTP Cookies  When using the SDK on the server side you must include the HTTP Cookie Header originally sent to your HTTP handler here. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: VerificationFlow
      */
-    @discardableResult
-    open class func getVerificationFlow(id: String, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: VerificationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return getVerificationFlowWithRequestBuilder(id: id, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getVerificationFlow(id: String, cookie: String? = nil) async throws -> VerificationFlow {
+        return try await getVerificationFlowWithRequestBuilder(id: id, cookie: cookie).execute().body
     }
 
     /**
@@ -929,19 +777,11 @@ open class FrontendAPI {
     /**
      Get WebAuthn JavaScript
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: String
      */
-    @discardableResult
-    open class func getWebAuthnJavaScript(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: String?, _ error: Error?) -> Void)) -> RequestTask {
-        return getWebAuthnJavaScriptWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getWebAuthnJavaScript() async throws -> String {
+        return try await getWebAuthnJavaScriptWithRequestBuilder().execute().body
     }
 
     /**
@@ -975,19 +815,11 @@ open class FrontendAPI {
      - parameter page: (query) Pagination Page  This value is currently an integer, but it is not sequential. The value is not the page number, but a reference. The next page can be any number and some numbers might return an empty list.  For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist. (optional, default to 1)
      - parameter xSessionToken: (header) Set the Session Token when calling from non-browser clients. A session token has a format of &#x60;MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj&#x60;. (optional)
      - parameter cookie: (header) Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that scenario you must include the HTTP Cookie Header which originally was included in the request to your server. An example of a session in the HTTP Cookie Header is: &#x60;ory_kratos_session&#x3D;a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f&#x3D;&#x3D;&#x60;.  It is ok if more than one cookie are included here as all other cookies will be ignored. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [Session]
      */
-    @discardableResult
-    open class func listMySessions(perPage: Int64? = nil, page: Int64? = nil, xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [Session]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listMySessionsWithRequestBuilder(perPage: perPage, page: page, xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listMySessions(perPage: Int64? = nil, page: Int64? = nil, xSessionToken: String? = nil, cookie: String? = nil) async throws -> [Session] {
+        return try await listMySessionsWithRequestBuilder(perPage: perPage, page: page, xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -1027,19 +859,11 @@ open class FrontendAPI {
      Perform Logout for Native Apps
      
      - parameter performNativeLogoutBody: (body)  
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func performNativeLogout(performNativeLogoutBody: PerformNativeLogoutBody, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return performNativeLogoutWithRequestBuilder(performNativeLogoutBody: performNativeLogoutBody).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func performNativeLogout(performNativeLogoutBody: PerformNativeLogoutBody) async throws {
+        return try await performNativeLogoutWithRequestBuilder(performNativeLogoutBody: performNativeLogoutBody).execute().body
     }
 
     /**
@@ -1072,19 +896,11 @@ open class FrontendAPI {
      
      - parameter xSessionToken: (header) Set the Session Token when calling from non-browser clients. A session token has a format of &#x60;MP2YWEMeM8MxjkGKpH4dqOQ4Q4DlSPaj&#x60;. (optional)
      - parameter cookie: (header) Set the Cookie Header. This is especially useful when calling this endpoint from a server-side application. In that scenario you must include the HTTP Cookie Header which originally was included in the request to your server. An example of a session in the HTTP Cookie Header is: &#x60;ory_kratos_session&#x3D;a19iOVAbdzdgl70Rq1QZmrKmcjDtdsviCTZx7m9a9yHIUS8Wa9T7hvqyGTsLHi6Qifn2WUfpAKx9DWp0SJGleIn9vh2YF4A16id93kXFTgIgmwIOvbVAScyrx7yVl6bPZnCx27ec4WQDtaTewC1CpgudeDV2jQQnSaCP6ny3xa8qLH-QUgYqdQuoA_LF1phxgRCUfIrCLQOkolX5nv3ze_f&#x3D;&#x3D;&#x60;.  It is ok if more than one cookie are included here as all other cookies will be ignored. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Session
      */
-    @discardableResult
-    open class func toSession(xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Session?, _ error: Error?) -> Void)) -> RequestTask {
-        return toSessionWithRequestBuilder(xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func toSession(xSessionToken: String? = nil, cookie: String? = nil) async throws -> Session {
+        return try await toSessionWithRequestBuilder(xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -1121,19 +937,11 @@ open class FrontendAPI {
      - parameter updateLoginFlowBody: (body)  
      - parameter xSessionToken: (header) The Session Token of the Identity performing the settings flow. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SuccessfulNativeLogin
      */
-    @discardableResult
-    open class func updateLoginFlow(flow: String, updateLoginFlowBody: UpdateLoginFlowBody, xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SuccessfulNativeLogin?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateLoginFlowWithRequestBuilder(flow: flow, updateLoginFlowBody: updateLoginFlowBody, xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateLoginFlow(flow: String, updateLoginFlowBody: UpdateLoginFlowBody, xSessionToken: String? = nil, cookie: String? = nil) async throws -> SuccessfulNativeLogin {
+        return try await updateLoginFlowWithRequestBuilder(flow: flow, updateLoginFlowBody: updateLoginFlowBody, xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -1173,19 +981,11 @@ open class FrontendAPI {
      
      - parameter token: (query) A Valid Logout Token  If you do not have a logout token because you only have a session cookie, call &#x60;/self-service/logout/browser&#x60; to generate a URL for this endpoint. (optional)
      - parameter returnTo: (query) The URL to return to after the logout was completed. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func updateLogoutFlow(token: String? = nil, returnTo: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateLogoutFlowWithRequestBuilder(token: token, returnTo: returnTo).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateLogoutFlow(token: String? = nil, returnTo: String? = nil) async throws {
+        return try await updateLogoutFlowWithRequestBuilder(token: token, returnTo: returnTo).execute().body
     }
 
     /**
@@ -1225,19 +1025,11 @@ open class FrontendAPI {
      - parameter updateRecoveryFlowBody: (body)  
      - parameter token: (query) Recovery Token  The recovery token which completes the recovery request. If the token is invalid (e.g. expired) an error will be shown to the end-user.  This parameter is usually set in a link and not used by any direct API call. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: RecoveryFlow
      */
-    @discardableResult
-    open class func updateRecoveryFlow(flow: String, updateRecoveryFlowBody: UpdateRecoveryFlowBody, token: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: RecoveryFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateRecoveryFlowWithRequestBuilder(flow: flow, updateRecoveryFlowBody: updateRecoveryFlowBody, token: token, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateRecoveryFlow(flow: String, updateRecoveryFlowBody: UpdateRecoveryFlowBody, token: String? = nil, cookie: String? = nil) async throws -> RecoveryFlow {
+        return try await updateRecoveryFlowWithRequestBuilder(flow: flow, updateRecoveryFlowBody: updateRecoveryFlowBody, token: token, cookie: cookie).execute().body
     }
 
     /**
@@ -1278,19 +1070,11 @@ open class FrontendAPI {
      - parameter flow: (query) The Registration Flow ID  The value for this parameter comes from &#x60;flow&#x60; URL Query parameter sent to your application (e.g. &#x60;/registration?flow&#x3D;abcde&#x60;). 
      - parameter updateRegistrationFlowBody: (body)  
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SuccessfulNativeRegistration
      */
-    @discardableResult
-    open class func updateRegistrationFlow(flow: String, updateRegistrationFlowBody: UpdateRegistrationFlowBody, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SuccessfulNativeRegistration?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateRegistrationFlowWithRequestBuilder(flow: flow, updateRegistrationFlowBody: updateRegistrationFlowBody, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateRegistrationFlow(flow: String, updateRegistrationFlowBody: UpdateRegistrationFlowBody, cookie: String? = nil) async throws -> SuccessfulNativeRegistration {
+        return try await updateRegistrationFlowWithRequestBuilder(flow: flow, updateRegistrationFlowBody: updateRegistrationFlowBody, cookie: cookie).execute().body
     }
 
     /**
@@ -1330,19 +1114,11 @@ open class FrontendAPI {
      - parameter updateSettingsFlowBody: (body)  
      - parameter xSessionToken: (header) The Session Token of the Identity performing the settings flow. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: SettingsFlow
      */
-    @discardableResult
-    open class func updateSettingsFlow(flow: String, updateSettingsFlowBody: UpdateSettingsFlowBody, xSessionToken: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: SettingsFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateSettingsFlowWithRequestBuilder(flow: flow, updateSettingsFlowBody: updateSettingsFlowBody, xSessionToken: xSessionToken, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateSettingsFlow(flow: String, updateSettingsFlowBody: UpdateSettingsFlowBody, xSessionToken: String? = nil, cookie: String? = nil) async throws -> SettingsFlow {
+        return try await updateSettingsFlowWithRequestBuilder(flow: flow, updateSettingsFlowBody: updateSettingsFlowBody, xSessionToken: xSessionToken, cookie: cookie).execute().body
     }
 
     /**
@@ -1384,19 +1160,11 @@ open class FrontendAPI {
      - parameter updateVerificationFlowBody: (body)  
      - parameter token: (query) Verification Token  The verification token which completes the verification request. If the token is invalid (e.g. expired) an error will be shown to the end-user.  This parameter is usually set in a link and not used by any direct API call. (optional)
      - parameter cookie: (header) HTTP Cookies  When using the SDK in a browser app, on the server side you must include the HTTP Cookie Header sent by the client to your server here. This ensures that CSRF and session cookies are respected. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: VerificationFlow
      */
-    @discardableResult
-    open class func updateVerificationFlow(flow: String, updateVerificationFlowBody: UpdateVerificationFlowBody, token: String? = nil, cookie: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: VerificationFlow?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateVerificationFlowWithRequestBuilder(flow: flow, updateVerificationFlowBody: updateVerificationFlowBody, token: token, cookie: cookie).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func updateVerificationFlow(flow: String, updateVerificationFlowBody: UpdateVerificationFlowBody, token: String? = nil, cookie: String? = nil) async throws -> VerificationFlow {
+        return try await updateVerificationFlowWithRequestBuilder(flow: flow, updateVerificationFlowBody: updateVerificationFlowBody, token: token, cookie: cookie).execute().body
     }
 
     /**

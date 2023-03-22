@@ -52,7 +52,7 @@ public struct APIHelper {
 //        if let value = value as? any RawRepresentable {
 //            return "\(value.rawValue)"
 //        } else {
-        return "\(value)"
+            return "\(value)"
 //        }
     }
 

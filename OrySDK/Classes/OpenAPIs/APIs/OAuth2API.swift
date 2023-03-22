@@ -17,19 +17,11 @@ open class OAuth2API {
      
      - parameter consentChallenge: (query) OAuth 2.0 Consent Request Challenge 
      - parameter acceptOAuth2ConsentRequest: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2RedirectTo
      */
-    @discardableResult
-    open class func acceptOAuth2ConsentRequest(consentChallenge: String, acceptOAuth2ConsentRequest: AcceptOAuth2ConsentRequest? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2RedirectTo?, _ error: Error?) -> Void)) -> RequestTask {
-        return acceptOAuth2ConsentRequestWithRequestBuilder(consentChallenge: consentChallenge, acceptOAuth2ConsentRequest: acceptOAuth2ConsentRequest).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func acceptOAuth2ConsentRequest(consentChallenge: String, acceptOAuth2ConsentRequest: AcceptOAuth2ConsentRequest? = nil) async throws -> OAuth2RedirectTo {
+        return try await acceptOAuth2ConsentRequestWithRequestBuilder(consentChallenge: consentChallenge, acceptOAuth2ConsentRequest: acceptOAuth2ConsentRequest).execute().body
     }
 
     /**
@@ -69,19 +61,11 @@ open class OAuth2API {
      
      - parameter loginChallenge: (query) OAuth 2.0 Login Request Challenge 
      - parameter acceptOAuth2LoginRequest: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2RedirectTo
      */
-    @discardableResult
-    open class func acceptOAuth2LoginRequest(loginChallenge: String, acceptOAuth2LoginRequest: AcceptOAuth2LoginRequest? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2RedirectTo?, _ error: Error?) -> Void)) -> RequestTask {
-        return acceptOAuth2LoginRequestWithRequestBuilder(loginChallenge: loginChallenge, acceptOAuth2LoginRequest: acceptOAuth2LoginRequest).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func acceptOAuth2LoginRequest(loginChallenge: String, acceptOAuth2LoginRequest: AcceptOAuth2LoginRequest? = nil) async throws -> OAuth2RedirectTo {
+        return try await acceptOAuth2LoginRequestWithRequestBuilder(loginChallenge: loginChallenge, acceptOAuth2LoginRequest: acceptOAuth2LoginRequest).execute().body
     }
 
     /**
@@ -120,19 +104,11 @@ open class OAuth2API {
      Accept OAuth 2.0 Session Logout Request
      
      - parameter logoutChallenge: (query) OAuth 2.0 Logout Request Challenge 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2RedirectTo
      */
-    @discardableResult
-    open class func acceptOAuth2LogoutRequest(logoutChallenge: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2RedirectTo?, _ error: Error?) -> Void)) -> RequestTask {
-        return acceptOAuth2LogoutRequestWithRequestBuilder(logoutChallenge: logoutChallenge).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func acceptOAuth2LogoutRequest(logoutChallenge: String) async throws -> OAuth2RedirectTo {
+        return try await acceptOAuth2LogoutRequestWithRequestBuilder(logoutChallenge: logoutChallenge).execute().body
     }
 
     /**
@@ -170,19 +146,11 @@ open class OAuth2API {
      Create OAuth 2.0 Client
      
      - parameter oAuth2Client: (body) OAuth 2.0 Client Request Body 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func createOAuth2Client(oAuth2Client: OAuth2Client, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return createOAuth2ClientWithRequestBuilder(oAuth2Client: oAuth2Client).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createOAuth2Client(oAuth2Client: OAuth2Client) async throws -> OAuth2Client {
+        return try await createOAuth2ClientWithRequestBuilder(oAuth2Client: oAuth2Client).execute().body
     }
 
     /**
@@ -217,19 +185,11 @@ open class OAuth2API {
      Delete OAuth 2.0 Client
      
      - parameter id: (path) The id of the OAuth 2.0 Client. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteOAuth2Client(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteOAuth2ClientWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteOAuth2Client(id: String) async throws {
+        return try await deleteOAuth2ClientWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -267,19 +227,11 @@ open class OAuth2API {
      Delete OAuth 2.0 Access Tokens from specific OAuth 2.0 Client
      
      - parameter clientId: (query) OAuth 2.0 Client ID 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteOAuth2Token(clientId: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteOAuth2TokenWithRequestBuilder(clientId: clientId).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteOAuth2Token(clientId: String) async throws {
+        return try await deleteOAuth2TokenWithRequestBuilder(clientId: clientId).execute().body
     }
 
     /**
@@ -317,19 +269,11 @@ open class OAuth2API {
      Delete Trusted OAuth2 JWT Bearer Grant Type Issuer
      
      - parameter id: (path) The id of the desired grant 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func deleteTrustedOAuth2JwtGrantIssuer(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return deleteTrustedOAuth2JwtGrantIssuerWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteTrustedOAuth2JwtGrantIssuer(id: String) async throws {
+        return try await deleteTrustedOAuth2JwtGrantIssuerWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -367,19 +311,11 @@ open class OAuth2API {
      Get an OAuth 2.0 Client
      
      - parameter id: (path) The id of the OAuth 2.0 Client. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func getOAuth2Client(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return getOAuth2ClientWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getOAuth2Client(id: String) async throws -> OAuth2Client {
+        return try await getOAuth2ClientWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -417,19 +353,11 @@ open class OAuth2API {
      Get OAuth 2.0 Consent Request
      
      - parameter consentChallenge: (query) OAuth 2.0 Consent Request Challenge 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2ConsentRequest
      */
-    @discardableResult
-    open class func getOAuth2ConsentRequest(consentChallenge: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2ConsentRequest?, _ error: Error?) -> Void)) -> RequestTask {
-        return getOAuth2ConsentRequestWithRequestBuilder(consentChallenge: consentChallenge).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getOAuth2ConsentRequest(consentChallenge: String) async throws -> OAuth2ConsentRequest {
+        return try await getOAuth2ConsentRequestWithRequestBuilder(consentChallenge: consentChallenge).execute().body
     }
 
     /**
@@ -467,19 +395,11 @@ open class OAuth2API {
      Get OAuth 2.0 Login Request
      
      - parameter loginChallenge: (query) OAuth 2.0 Login Request Challenge 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2LoginRequest
      */
-    @discardableResult
-    open class func getOAuth2LoginRequest(loginChallenge: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2LoginRequest?, _ error: Error?) -> Void)) -> RequestTask {
-        return getOAuth2LoginRequestWithRequestBuilder(loginChallenge: loginChallenge).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getOAuth2LoginRequest(loginChallenge: String) async throws -> OAuth2LoginRequest {
+        return try await getOAuth2LoginRequestWithRequestBuilder(loginChallenge: loginChallenge).execute().body
     }
 
     /**
@@ -517,19 +437,11 @@ open class OAuth2API {
      Get OAuth 2.0 Session Logout Request
      
      - parameter logoutChallenge: (query)  
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2LogoutRequest
      */
-    @discardableResult
-    open class func getOAuth2LogoutRequest(logoutChallenge: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2LogoutRequest?, _ error: Error?) -> Void)) -> RequestTask {
-        return getOAuth2LogoutRequestWithRequestBuilder(logoutChallenge: logoutChallenge).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getOAuth2LogoutRequest(logoutChallenge: String) async throws -> OAuth2LogoutRequest {
+        return try await getOAuth2LogoutRequestWithRequestBuilder(logoutChallenge: logoutChallenge).execute().body
     }
 
     /**
@@ -567,19 +479,11 @@ open class OAuth2API {
      Get Trusted OAuth2 JWT Bearer Grant Type Issuer
      
      - parameter id: (path) The id of the desired grant 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: TrustedOAuth2JwtGrantIssuer
      */
-    @discardableResult
-    open class func getTrustedOAuth2JwtGrantIssuer(id: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: TrustedOAuth2JwtGrantIssuer?, _ error: Error?) -> Void)) -> RequestTask {
-        return getTrustedOAuth2JwtGrantIssuerWithRequestBuilder(id: id).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func getTrustedOAuth2JwtGrantIssuer(id: String) async throws -> TrustedOAuth2JwtGrantIssuer {
+        return try await getTrustedOAuth2JwtGrantIssuerWithRequestBuilder(id: id).execute().body
     }
 
     /**
@@ -618,19 +522,11 @@ open class OAuth2API {
      
      - parameter token: (form) The string value of the token. For access tokens, this is the \\\&quot;access_token\\\&quot; value returned from the token endpoint defined in OAuth 2.0. For refresh tokens, this is the \\\&quot;refresh_token\\\&quot; value returned. 
      - parameter scope: (form) An optional, space separated list of required scopes. If the access token was not granted one of the scopes, the result of active will be false. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: IntrospectedOAuth2Token
      */
-    @discardableResult
-    open class func introspectOAuth2Token(token: String, scope: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: IntrospectedOAuth2Token?, _ error: Error?) -> Void)) -> RequestTask {
-        return introspectOAuth2TokenWithRequestBuilder(token: token, scope: scope).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func introspectOAuth2Token(token: String, scope: String? = nil) async throws -> IntrospectedOAuth2Token {
+        return try await introspectOAuth2TokenWithRequestBuilder(token: token, scope: scope).execute().body
     }
 
     /**
@@ -675,19 +571,11 @@ open class OAuth2API {
      - parameter pageToken: (query) Next Page Token  The next page token. For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). (optional, default to "1")
      - parameter clientName: (query) The name of the clients to filter by. (optional)
      - parameter owner: (query) The owner of the clients to filter by. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [OAuth2Client]
      */
-    @discardableResult
-    open class func listOAuth2Clients(pageSize: Int64? = nil, pageToken: String? = nil, clientName: String? = nil, owner: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [OAuth2Client]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listOAuth2ClientsWithRequestBuilder(pageSize: pageSize, pageToken: pageToken, clientName: clientName, owner: owner).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listOAuth2Clients(pageSize: Int64? = nil, pageToken: String? = nil, clientName: String? = nil, owner: String? = nil) async throws -> [OAuth2Client] {
+        return try await listOAuth2ClientsWithRequestBuilder(pageSize: pageSize, pageToken: pageToken, clientName: clientName, owner: owner).execute().body
     }
 
     /**
@@ -734,19 +622,11 @@ open class OAuth2API {
      - parameter pageSize: (query) Items per Page  This is the number of items per page to return. For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). (optional, default to 250)
      - parameter pageToken: (query) Next Page Token  The next page token. For details on pagination please head over to the [pagination documentation](https://www.ory.sh/docs/ecosystem/api-design#pagination). (optional, default to "1")
      - parameter loginSessionId: (query) The login session id to list the consent sessions for. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [OAuth2ConsentSession]
      */
-    @discardableResult
-    open class func listOAuth2ConsentSessions(subject: String, pageSize: Int64? = nil, pageToken: String? = nil, loginSessionId: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [OAuth2ConsentSession]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listOAuth2ConsentSessionsWithRequestBuilder(subject: subject, pageSize: pageSize, pageToken: pageToken, loginSessionId: loginSessionId).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listOAuth2ConsentSessions(subject: String, pageSize: Int64? = nil, pageToken: String? = nil, loginSessionId: String? = nil) async throws -> [OAuth2ConsentSession] {
+        return try await listOAuth2ConsentSessionsWithRequestBuilder(subject: subject, pageSize: pageSize, pageToken: pageToken, loginSessionId: loginSessionId).execute().body
     }
 
     /**
@@ -792,19 +672,11 @@ open class OAuth2API {
      - parameter maxItems: (query)  (optional)
      - parameter defaultItems: (query)  (optional)
      - parameter issuer: (query) If optional \&quot;issuer\&quot; is supplied, only jwt-bearer grants with this issuer will be returned. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: [TrustedOAuth2JwtGrantIssuer]
      */
-    @discardableResult
-    open class func listTrustedOAuth2JwtGrantIssuers(maxItems: Int64? = nil, defaultItems: Int64? = nil, issuer: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: [TrustedOAuth2JwtGrantIssuer]?, _ error: Error?) -> Void)) -> RequestTask {
-        return listTrustedOAuth2JwtGrantIssuersWithRequestBuilder(maxItems: maxItems, defaultItems: defaultItems, issuer: issuer).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func listTrustedOAuth2JwtGrantIssuers(maxItems: Int64? = nil, defaultItems: Int64? = nil, issuer: String? = nil) async throws -> [TrustedOAuth2JwtGrantIssuer] {
+        return try await listTrustedOAuth2JwtGrantIssuersWithRequestBuilder(maxItems: maxItems, defaultItems: defaultItems, issuer: issuer).execute().body
     }
 
     /**
@@ -845,19 +717,11 @@ open class OAuth2API {
     /**
      OAuth 2.0 Authorize Endpoint
      
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: ErrorOAuth2
      */
-    @discardableResult
-    open class func oAuth2Authorize(apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: ErrorOAuth2?, _ error: Error?) -> Void)) -> RequestTask {
-        return oAuth2AuthorizeWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func oAuth2Authorize() async throws -> ErrorOAuth2 {
+        return try await oAuth2AuthorizeWithRequestBuilder().execute().body
     }
 
     /**
@@ -892,19 +756,11 @@ open class OAuth2API {
      - parameter code: (form)  (optional)
      - parameter redirectUri: (form)  (optional)
      - parameter refreshToken: (form)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2TokenExchange
      */
-    @discardableResult
-    open class func oauth2TokenExchange(grantType: String, clientId: String? = nil, code: String? = nil, redirectUri: String? = nil, refreshToken: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2TokenExchange?, _ error: Error?) -> Void)) -> RequestTask {
-        return oauth2TokenExchangeWithRequestBuilder(grantType: grantType, clientId: clientId, code: code, redirectUri: redirectUri, refreshToken: refreshToken).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func oauth2TokenExchange(grantType: String, clientId: String? = nil, code: String? = nil, redirectUri: String? = nil, refreshToken: String? = nil) async throws -> OAuth2TokenExchange {
+        return try await oauth2TokenExchangeWithRequestBuilder(grantType: grantType, clientId: clientId, code: code, redirectUri: redirectUri, refreshToken: refreshToken).execute().body
     }
 
     /**
@@ -956,19 +812,11 @@ open class OAuth2API {
      
      - parameter id: (path) The id of the OAuth 2.0 Client. 
      - parameter jsonPatch: (body) OAuth 2.0 Client JSON Patch Body 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func patchOAuth2Client(id: String, jsonPatch: [JsonPatch], apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return patchOAuth2ClientWithRequestBuilder(id: id, jsonPatch: jsonPatch).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func patchOAuth2Client(id: String, jsonPatch: [JsonPatch]) async throws -> OAuth2Client {
+        return try await patchOAuth2ClientWithRequestBuilder(id: id, jsonPatch: jsonPatch).execute().body
     }
 
     /**
@@ -1008,19 +856,11 @@ open class OAuth2API {
      
      - parameter consentChallenge: (query) OAuth 2.0 Consent Request Challenge 
      - parameter rejectOAuth2Request: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2RedirectTo
      */
-    @discardableResult
-    open class func rejectOAuth2ConsentRequest(consentChallenge: String, rejectOAuth2Request: RejectOAuth2Request? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2RedirectTo?, _ error: Error?) -> Void)) -> RequestTask {
-        return rejectOAuth2ConsentRequestWithRequestBuilder(consentChallenge: consentChallenge, rejectOAuth2Request: rejectOAuth2Request).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func rejectOAuth2ConsentRequest(consentChallenge: String, rejectOAuth2Request: RejectOAuth2Request? = nil) async throws -> OAuth2RedirectTo {
+        return try await rejectOAuth2ConsentRequestWithRequestBuilder(consentChallenge: consentChallenge, rejectOAuth2Request: rejectOAuth2Request).execute().body
     }
 
     /**
@@ -1060,19 +900,11 @@ open class OAuth2API {
      
      - parameter loginChallenge: (query) OAuth 2.0 Login Request Challenge 
      - parameter rejectOAuth2Request: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2RedirectTo
      */
-    @discardableResult
-    open class func rejectOAuth2LoginRequest(loginChallenge: String, rejectOAuth2Request: RejectOAuth2Request? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2RedirectTo?, _ error: Error?) -> Void)) -> RequestTask {
-        return rejectOAuth2LoginRequestWithRequestBuilder(loginChallenge: loginChallenge, rejectOAuth2Request: rejectOAuth2Request).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func rejectOAuth2LoginRequest(loginChallenge: String, rejectOAuth2Request: RejectOAuth2Request? = nil) async throws -> OAuth2RedirectTo {
+        return try await rejectOAuth2LoginRequestWithRequestBuilder(loginChallenge: loginChallenge, rejectOAuth2Request: rejectOAuth2Request).execute().body
     }
 
     /**
@@ -1111,19 +943,11 @@ open class OAuth2API {
      Reject OAuth 2.0 Session Logout Request
      
      - parameter logoutChallenge: (query)  
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func rejectOAuth2LogoutRequest(logoutChallenge: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return rejectOAuth2LogoutRequestWithRequestBuilder(logoutChallenge: logoutChallenge).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func rejectOAuth2LogoutRequest(logoutChallenge: String) async throws {
+        return try await rejectOAuth2LogoutRequestWithRequestBuilder(logoutChallenge: logoutChallenge).execute().body
     }
 
     /**
@@ -1163,19 +987,11 @@ open class OAuth2API {
      - parameter subject: (query) OAuth 2.0 Consent Subject  The subject whose consent sessions should be deleted. 
      - parameter client: (query) OAuth 2.0 Client ID  If set, deletes only those consent sessions that have been granted to the specified OAuth 2.0 Client ID. (optional)
      - parameter all: (query) Revoke All Consent Sessions  If set to &#x60;true&#x60; deletes all consent sessions by the Subject that have been granted. (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func revokeOAuth2ConsentSessions(subject: String, client: String? = nil, all: Bool? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return revokeOAuth2ConsentSessionsWithRequestBuilder(subject: subject, client: client, all: all).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func revokeOAuth2ConsentSessions(subject: String, client: String? = nil, all: Bool? = nil) async throws {
+        return try await revokeOAuth2ConsentSessionsWithRequestBuilder(subject: subject, client: client, all: all).execute().body
     }
 
     /**
@@ -1217,19 +1033,11 @@ open class OAuth2API {
      Revokes All OAuth 2.0 Login Sessions of a Subject
      
      - parameter subject: (query) OAuth 2.0 Subject  The subject to revoke authentication sessions for. 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func revokeOAuth2LoginSessions(subject: String, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return revokeOAuth2LoginSessionsWithRequestBuilder(subject: subject).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func revokeOAuth2LoginSessions(subject: String) async throws {
+        return try await revokeOAuth2LoginSessionsWithRequestBuilder(subject: subject).execute().body
     }
 
     /**
@@ -1269,19 +1077,11 @@ open class OAuth2API {
      - parameter token: (form)  
      - parameter clientId: (form)  (optional)
      - parameter clientSecret: (form)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: Void
      */
-    @discardableResult
-    open class func revokeOAuth2Token(token: String, clientId: String? = nil, clientSecret: String? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
-        return revokeOAuth2TokenWithRequestBuilder(token: token, clientId: clientId, clientSecret: clientSecret).execute(apiResponseQueue) { result in
-            switch result {
-            case .success:
-                completion((), nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func revokeOAuth2Token(token: String, clientId: String? = nil, clientSecret: String? = nil) async throws {
+        return try await revokeOAuth2TokenWithRequestBuilder(token: token, clientId: clientId, clientSecret: clientSecret).execute().body
     }
 
     /**
@@ -1329,19 +1129,11 @@ open class OAuth2API {
      
      - parameter id: (path) OAuth 2.0 Client ID 
      - parameter oAuth2Client: (body) OAuth 2.0 Client Request Body 
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func setOAuth2Client(id: String, oAuth2Client: OAuth2Client, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return setOAuth2ClientWithRequestBuilder(id: id, oAuth2Client: oAuth2Client).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setOAuth2Client(id: String, oAuth2Client: OAuth2Client) async throws -> OAuth2Client {
+        return try await setOAuth2ClientWithRequestBuilder(id: id, oAuth2Client: oAuth2Client).execute().body
     }
 
     /**
@@ -1381,19 +1173,11 @@ open class OAuth2API {
      
      - parameter id: (path) OAuth 2.0 Client ID 
      - parameter oAuth2ClientTokenLifespans: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: OAuth2Client
      */
-    @discardableResult
-    open class func setOAuth2ClientLifespans(id: String, oAuth2ClientTokenLifespans: OAuth2ClientTokenLifespans? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: OAuth2Client?, _ error: Error?) -> Void)) -> RequestTask {
-        return setOAuth2ClientLifespansWithRequestBuilder(id: id, oAuth2ClientTokenLifespans: oAuth2ClientTokenLifespans).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func setOAuth2ClientLifespans(id: String, oAuth2ClientTokenLifespans: OAuth2ClientTokenLifespans? = nil) async throws -> OAuth2Client {
+        return try await setOAuth2ClientLifespansWithRequestBuilder(id: id, oAuth2ClientTokenLifespans: oAuth2ClientTokenLifespans).execute().body
     }
 
     /**
@@ -1432,19 +1216,11 @@ open class OAuth2API {
      Trust OAuth2 JWT Bearer Grant Type Issuer
      
      - parameter trustOAuth2JwtGrantIssuer: (body)  (optional)
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
+     - returns: TrustedOAuth2JwtGrantIssuer
      */
-    @discardableResult
-    open class func trustOAuth2JwtGrantIssuer(trustOAuth2JwtGrantIssuer: TrustOAuth2JwtGrantIssuer? = nil, apiResponseQueue: DispatchQueue = OrySDKAPI.apiResponseQueue, completion: @escaping ((_ data: TrustedOAuth2JwtGrantIssuer?, _ error: Error?) -> Void)) -> RequestTask {
-        return trustOAuth2JwtGrantIssuerWithRequestBuilder(trustOAuth2JwtGrantIssuer: trustOAuth2JwtGrantIssuer).execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func trustOAuth2JwtGrantIssuer(trustOAuth2JwtGrantIssuer: TrustOAuth2JwtGrantIssuer? = nil) async throws -> TrustedOAuth2JwtGrantIssuer {
+        return try await trustOAuth2JwtGrantIssuerWithRequestBuilder(trustOAuth2JwtGrantIssuer: trustOAuth2JwtGrantIssuer).execute().body
     }
 
     /**
